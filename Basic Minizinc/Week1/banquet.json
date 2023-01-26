@@ -1,0 +1,6 @@
+{
+ "DISH": [{"e": "SNAKESOUP"}, {"e": "GONGBAOFROGS"}, {"e": "MAPOTOFU"}],
+ "capacity": 18,
+ "satisf": [29, 19, 8],
+ "size": [8, 5, 3]
+}

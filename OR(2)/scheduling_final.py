@@ -10,7 +10,8 @@ from gurobipy import *
 import ast
 MACHINES = 3
 
-data = pd.read_excel('final.xlsx', 'Jobs')
+path = "C:/Users/karthi.vignes/Documents/GitHub/Operations-Research/OR(2)/"
+data = pd.read_excel(path+'final.xlsx', 'Jobs')
 data['Conflicting jobs'] = data['Conflicting jobs'].apply(ast.literal_eval)
 
 #indices
@@ -37,7 +38,11 @@ makespan.addConstrs(x[i][1]+x[i][4]+x[i][7] <= 1 for i in machines)
 makespan.addConstrs(x[i][5]+x[i][8] <= 1 for i in machines)
 makespan.addConstrs(x[i][6]+x[i][9] <= 1 for i in machines)
 makespan.addConstrs(x[i][10]+x[i][14] <= 1 for i in machines)
-makespan.addConstrs((quicksum(x[i][j] * processing_times[j+1] for j in jobs) <= w) for i in machines)
+makespan.addConstrs(((quicksum(x[i][j] * processing_times[j+1] for j in jobs) <= w) for i in machines), "Processing Times")
 makespan.update()
 
 makespan.optimize()
+
+for c in makespan.getConstrs():
+    if c.Slack > 1.0e-6:
+        print(c.ConstrName)

@@ -9,8 +9,9 @@ import pandas as pd
 from gurobipy import *
 AMBULANCES = 3
 
-distances = pd.read_excel('final.xlsx', 'Distances')
-population = pd.read_excel('final.xlsx', 'Population')
+path = "C:/Users/karthi.vignes/Documents/GitHub/Operations-Research/OR(2)/"
+distances = pd.read_excel(path+'final.xlsx', 'Distances')
+population = pd.read_excel(path+'final.xlsx', 'Population')
 
 #indices
 districts = range(len(distances['District']))
@@ -41,3 +42,7 @@ ambulance.addConstrs((pop_weighted >= w[i] * population[i] for i in districts))
 ambulance.update()
 
 ambulance.optimize()
+
+for c in ambulance.getConstrs():
+    if c.Slack > 1.0e-6:
+        print(c.ConstrName)

@@ -40,10 +40,9 @@ weighted_distances = []
 for amb_dist in ambulance_districts:
     weighted_distances.append(distances[amb_dist+1]*population)
     wd_df = pd.concat(weighted_distances, axis=1)
-print(wd_df)
 
 obj = max(pd.DataFrame(min_distance)[0]*population)
-    
+print(obj)
     
 
     
